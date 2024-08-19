@@ -46,8 +46,9 @@ public interface CarRepository extends JpaRepository<Car, Integer>, CarRepositor
             "SELECT 1 FROM car WHERE status = 'Available' AND idCar = :idCar AND idCar NOT IN (" +
             "SELECT Car_idCar FROM booking " +
             "WHERE startDateTime <= :endTime AND endDateTime >= :startTime " +
-            "AND status <> 'Completed'))",
+            "AND status NOT IN ('Completed', 'Cancelled')))",
             nativeQuery = true)
+
     Long checkCarAvailable(@Param("startTime") LocalDateTime startTime,
                            @Param("endTime") LocalDateTime endTime,
                            @Param("idCar") int idCar);

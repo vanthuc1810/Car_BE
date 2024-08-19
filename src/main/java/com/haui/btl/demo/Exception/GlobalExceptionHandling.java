@@ -1,6 +1,8 @@
 package com.haui.btl.demo.Exception;
 
 import com.haui.btl.demo.dto.response.ApiResponse;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -37,4 +39,10 @@ public class GlobalExceptionHandling {
                         .message(errorCode.getMessage())
                         .build());
     }
+
+    @ExceptionHandler(value = NullPointerException.class)
+    ResponseEntity<ApiResponse> handleNullPointerException(NullPointerException exception){
+        ApiResponse apiReponse = new ApiResponse();
+        apiReponse.setMessage("So ngay khong hop le");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiReponse);    }
 }
